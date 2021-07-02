@@ -1,0 +1,18 @@
+version: '3'
+services:
+  strikepractice-database:
+    container_name: strikepractice-database
+    image: mariadb:10.6.2
+    ports:
+     - "127.0.0.1:5859:3306" # only published locally
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: strikepractice
+      MYSQL_USER: sprac-docker
+      MYSQL_PASSWORD: strikepracticeisbest
+    restart: on-failure
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
