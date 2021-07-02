@@ -33,7 +33,7 @@ app.use('/get-data', (req, res) => {
 app.post('/set-data', (req, res) => {
     const token = req.body.token
     if (!token || token.length < 10) res.status(401)
-    const data = req.body.data
+    const data = req.body
     setData(token, "data", data)
         .then(() => res.sendStatus(200))
         .catch(error => {

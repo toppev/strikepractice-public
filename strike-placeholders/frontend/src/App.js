@@ -52,29 +52,24 @@ function App() {
             .sort((a, b) => a.placeholder.localeCompare(b.placeholder))
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const urlSearchParams = new URLSearchParams(window.location.search);
-                const token = urlSearchParams.get('token')
-                if (!token) {
-                    setLoading(false)
-                    return;
-                }
-                const res = await axios.post(`${API_URL}/get-data`, { token });
-                const data = res.data.data
-                data.placeholders = data.placeholders.filter(it =>
-                    !it.placeholder.startsWith('<opponent_colored') &&
-                    !it.placeholder.startsWith('<teammate_colored') &&
-                    (it.placeholder.length > 12 || (!it.placeholder.startsWith("<opponent") && !it.placeholder.startsWith("<teammate")))
-                )
-                setData(data)
-                setLoading(false)
-            } catch (err) {
-                window.alert(err.response?.data?.message || err)
-            }
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const token = urlSearchParams.get('token')
+        if (!token) {
+            setLoading(false)
+            return;
         }
-
-        fetchData().then()
+        axios.post(`${API_URL}/get-data`, { token }).then(res => {
+            const data = res.data.data
+            data.placeholders = data.placeholders.filter(it =>
+                !it.placeholder.startsWith('<opponent_colored') &&
+                !it.placeholder.startsWith('<teammate_colored') &&
+                (it.placeholder.length > 12 || (!it.placeholder.startsWith("<opponent") && !it.placeholder.startsWith("<teammate")))
+            )
+            setData(data)
+            setLoading(false)
+        }).catch(err => {
+            window.alert(err.response?.data?.message || err)
+        })
     }, [])
 
     return (
