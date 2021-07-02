@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  backend:
+    container_name: strike-placeholders-backend
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - '3030:3030'
+    image: strike-placeholders-backend
+    volumes:
+      - ./backend:/usr/src/app
+  frontend:
+    container_name: strike-placeholders-frontend
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    volumes:
+      - ./frontend:/usr/src/app
+  redis:
+    container_name: strike-placeholders-redis-dev
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    restart: always
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+volumes:
+  redis_data:
