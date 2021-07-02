@@ -21,7 +21,7 @@ app.use('/get-data', (req, res) => {
     if (!token || token.length < 10) {
         res.status(401).json({ message: 'invalid token, no token?' })
     } else {
-        getData(token)
+        getData(token, "data")
             .then(data => res.json({ data }))
             .catch(error => {
                 console.log(error)
@@ -32,9 +32,9 @@ app.use('/get-data', (req, res) => {
 
 app.post('/set-data', (req, res) => {
     const token = req.body.token
-    if (token && token.length < 10) res.status(401)
-    const addresses = req.body.data
-    setData(token, "placeholders", addresses)
+    if (!token || token.length < 10) res.status(401)
+    const data = req.body.data
+    setData(token, "data", data)
         .then(() => res.sendStatus(200))
         .catch(error => {
             console.log(error)

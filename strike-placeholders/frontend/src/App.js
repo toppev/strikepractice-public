@@ -3,6 +3,7 @@ import {
     Button,
     Card,
     createStyles,
+    LinearProgress,
     List,
     ListItem,
     ListItemText,
@@ -25,18 +26,16 @@ const useStyles = makeStyles(theme =>
             textAlign: 'center'
         },
         search: {
-            width: '400px',
+            maxWidth: '400px',
+            minWidth: '300px',
         },
         tokenField: {
             width: '300px'
         },
-        margin40: {
-            margin: '40px'
-        },
         placeholderList: {
             textAlign: 'center',
             margin: 'auto',
-            width: '60%'
+            maxWidth: '600%'
         }
     }));
 
@@ -46,16 +45,31 @@ function App() {
 
     const [data, setData] = useState([]);
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true);
 
-    const filteredPlaceholders = data?.placeholders?.filter(it => JSON.stringify(it).includes(search))
+
+    const filteredPlaceholders =
+        (data?.placeholders?.filter(it => new RegExp(search, 'i').test(JSON.stringify(it))) || [])
+            .sort((a, b) => a.placeholder.localeCompare(b.placeholder))
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const token = urlSearchParams.get('token')
+                if (!token) {
+                    setLoading(false)
+                    return;
+                }
                 const res = await axios.post(`${API_URL}/get-data`, { token });
-                setData(res.data.data)
+                const data = res.data.data
+                data.placeholders = data.placeholders.filter(it =>
+                    !it.placeholder.startsWith('<opponent_colored') &&
+                    !it.placeholder.startsWith('<teammate_colored') &&
+                    (it.placeholder.length > 12 || (!it.placeholder.startsWith("<opponent") && !it.placeholder.startsWith("<teammate")))
+                )
+                setData(data)
+                setLoading(false)
             } catch (err) {
                 window.alert(err.response?.data?.message || err)
             }
@@ -69,7 +83,7 @@ function App() {
             <Typography variant="h1" color="primary"
                         style={{ margin: '60px 0px', marginTop: '20px', fontSize: '36px' }}>StrikePractice Placeholders</Typography>
 
-            <div className={classes.margin40}>
+            <div>
 
                 <div style={{ padding: '20px' }}>
                     <p style={{ fontSize: '18px', color: '#4c4c4c' }}>
@@ -78,14 +92,15 @@ function App() {
                 </div>
 
                 <TextField
-                    style={{margin: '50px 0px'}}
+                    style={{ margin: '50px 0px' }}
                     className={classes.search}
                     placeholder="Search placeholders..."
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                 />
 
-                <div>
+                <div style={{ maxWidth: '1100px', margin: 'auto' }}>
+                    <p>{filteredPlaceholders?.length || 0} placeholders found</p>
                     <List className={classes.placeholderList}>
                         {filteredPlaceholders?.map(it => {
                             const placeholderAPI = "%strikepractice_" + it.placeholder.substring(1, it.placeholder.length - 1) + '%'
@@ -110,7 +125,8 @@ function App() {
                             );
                         })}
                     </List>
-                    {filteredPlaceholders.length === 0 && <p>No placeholders found...</p>}
+                    {loading && <LinearProgress/>}
+                    {!loading && filteredPlaceholders?.length === 0 && <p>No placeholders found...</p>}
                 </div>
 
             </div>
@@ -118,7 +134,7 @@ function App() {
     );
 }
 
-function CopyText({text, color}) {
+function CopyText({ text, color }) {
 
     return (
         <CopyToClipboard>

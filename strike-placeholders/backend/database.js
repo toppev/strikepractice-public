@@ -3,8 +3,8 @@ const redis = new Redis(6379, process.env.REDIS)
 
 const expirySeconds = 60 * 60 * 24 * 7 // 1 week
 
-async function getData(token) {
-    return JSON.parse(await redis.get(token))
+async function getData(token, key) {
+    return JSON.parse(await redis.get(token + ":" + key))
 }
 
 async function setData(token, key, data) {
