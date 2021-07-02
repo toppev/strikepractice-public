@@ -47,7 +47,6 @@ function App() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
 
-
     const filteredPlaceholders =
         (data?.placeholders?.filter(it => new RegExp(search, 'i').test(JSON.stringify(it))) || [])
             .sort((a, b) => a.placeholder.localeCompare(b.placeholder))
