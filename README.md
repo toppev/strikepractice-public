@@ -3,7 +3,9 @@
 Public stuff related to StrikePractice spigot plugin.   
 More stuff will be moved here so everything can be found in one place.
 
+# Reporting bugs
 
+You can open a new issue here to report any problems with StrikePractice or officially supported addons/resources.
 
 
 ## Table of contents
