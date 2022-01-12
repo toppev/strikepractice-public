@@ -1,6 +1,10 @@
 
 ## Host a database for StrikePractice in 2 minutes
 
+With MC server providers there probably are easier ways that you are familiar with.
+
+**This is meant for testing, and I do not provide any guarantee or support**
+
 Simple instructions to host database for StrikePractice in no time on your own VPS.
 Note that you must have root access to your server.
 

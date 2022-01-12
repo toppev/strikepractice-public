@@ -1,5 +1,7 @@
 # strike-placeholders
 
+**Note: this was made in one evening. Not a great example and still a bit laggy.**
+
 Quickly made simple React app + NodeJS backend with Redis to display placeholders.
 
 Use `/sprac placeholders` on your server with StrikePractice 3.3.2+!

@@ -9,7 +9,7 @@ const { setData, getData } = require("./database");
 const port = 3030
 
 app.use(express.json({
-    limit: '2mb'
+    limit: '8mb'
 }));
 
 app.use(morgan('":url :status - :response-time ms (len: :req[content-length])', {}));

@@ -10,7 +10,7 @@ services:
       MYSQL_DATABASE: strikepractice
       MYSQL_USER: sprac-docker
       MYSQL_PASSWORD: strikepracticeisbest
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - db-data:/var/lib/mysql
 

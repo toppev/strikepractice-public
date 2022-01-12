@@ -47,8 +47,13 @@ function App() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
 
-    const filteredPlaceholders =
-        (data?.placeholders?.filter(it => new RegExp(search, 'i').test(JSON.stringify(it))) || [])
+    const filteredPlaceholders = !search?.length ? [] :
+        (data?.placeholders?.filter(it => {
+            const words = search.split(' ')
+            if (!words.length) return true
+            const json = JSON.stringify(it);
+            return words.every(s => new RegExp(s, 'i').test(json))
+        }) || [])
             .sort((a, b) => a.placeholder.localeCompare(b.placeholder))
 
     useEffect(() => {
@@ -60,11 +65,8 @@ function App() {
         }
         axios.post(`${API_URL}/get-data`, { token }).then(res => {
             const data = res.data.data
-            data.placeholders = data.placeholders.filter(it =>
-                !it.placeholder.startsWith('<opponent_colored') &&
-                !it.placeholder.startsWith('<teammate_colored') &&
-                (it.placeholder.length > 12 || (!it.placeholder.startsWith("<opponent") && !it.placeholder.startsWith("<teammate")))
-            )
+            const regex = /^<(opponent|teammate|opponent_colored|teammate_colored)\d+>$/
+            data.placeholders = data.placeholders.filter(it => !regex.test(it.placeholder))
             setData(data)
             setLoading(false)
         }).catch(err => {
@@ -94,7 +96,14 @@ function App() {
                 />
 
                 <div style={{ maxWidth: '1100px', margin: 'auto' }}>
-                    <p>{filteredPlaceholders?.length || 0} placeholders found</p>
+                    <p>Found {filteredPlaceholders?.length || data?.placeholders?.length || 0} placeholders.</p>
+                    <Button
+                        size="small"
+                        color="primary"
+                        variant="contained"
+                        disabled={search === " "}
+                        onClick={() => setSearch(" ")}
+                    >Show all</Button>
                     <List className={classes.placeholderList}>
                         {filteredPlaceholders?.map(it => {
                             const placeholderAPI = "%strikepractice_" + it.placeholder.substring(1, it.placeholder.length - 1) + '%'
@@ -103,16 +112,16 @@ function App() {
                                     <Card style={{ width: '100%', padding: '0 10%' }}>
                                         <Box display="flex" flexDirection="row" style={{ justifyContent: 'space-between' }}>
                                             <ListItemText
-                                                primary={`Current value: ${it.currentValue}`}
-                                                secondary={<>
-                                                    <span>PlaceholderAPI: {placeholderAPI}</span>
-                                                    <CopyText color="primary" text={placeholderAPI}/>
+                                                primary={<>
+                                                    <span>Placeholder: {it.placeholder}</span>
+                                                    <CopyText color="secondary" text={it.placeholder}/>
                                                 </>}
+                                                secondary={`Current value: ${it.currentValue}`}
                                             />
-                                            <p style={{ margin: '20px' }}>
-                                                {it.placeholder}
+                                            <p style={{ margin: '20px', color: 'gray' }}>
+                                                <span>PAPI: {placeholderAPI}</span>
                                             </p>
-                                            <CopyText color="secondary" text={it.placeholder}/>
+                                            <CopyText color="primary" text={placeholderAPI}/>
                                         </Box>
                                     </Card>
                                 </ListItem>
@@ -120,7 +129,7 @@ function App() {
                         })}
                     </List>
                     {loading && <LinearProgress/>}
-                    {!loading && filteredPlaceholders?.length === 0 && <p>No placeholders found...</p>}
+                    {!loading && filteredPlaceholders?.length === 0 && <p>No search matches...</p>}
                 </div>
 
             </div>
