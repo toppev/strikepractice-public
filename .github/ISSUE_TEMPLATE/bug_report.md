@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help improve StrikePractice
 title: "[BUG] <short description>"
-labels: ''
+labels: bug
 assignees: toppev
 
 ---
