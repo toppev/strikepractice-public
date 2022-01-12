@@ -7,6 +7,9 @@ More stuff will be moved here so everything can be found in one place.
 
 You can open a new issue here to report any problems with StrikePractice or officially supported addons/resources.
 
+If you're looking for support join the [Discord Server](https://discord.gg/SkFbkgg)
+
+You may need to verify you have purchased the plugin in order to receive support.
 
 ## Table of contents
 
