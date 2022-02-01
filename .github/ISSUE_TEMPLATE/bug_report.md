@@ -28,7 +28,7 @@ If there are any errors in the console, please include them here.
 If there are no errors, enable "/sprac debug" and check if there are any relevant debug logs.
 
 **Checklist**
-- [ ] The issue occurs on latest spigot version (or devbuild) version of StrikePractice.
+- [ ] The issue occurs on latest version of StrikePractice.
 - [ ] The issue occurs without other plugins (or non-official addons).
 - [ ] I am using regular spigot or paper (not a fork) and the issue still occurs.
 - [ ] I have purchased StrikePractice or I am working with someone who has purchased the resource.
