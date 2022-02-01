@@ -33,7 +33,7 @@ If there are no errors, enable "/sprac debug" and check if there are any relevan
 - [ ] I am using regular spigot or paper (not a fork) and the issue still occurs.
 - [ ] I have purchased StrikePractice or I am working with someone who has purchased the resource.
 
-**Desktop (please complete the following information):**
+**Versions:**
  - Server version [e.g. 1.8.8 paper spigot (not fork)]
  - Client version [e.g. optifine 1.8.8]
  - Other version [e.g. Database, addons, plugins]
