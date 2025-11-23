@@ -65,7 +65,7 @@ function App() {
 
     const filteredPlaceholders = useMemo(() => {
         if (!debouncedSearch?.trim()) {
-            return [];
+            return data?.placeholders || [];
         }
         
         const searchTerms = debouncedSearch.toLowerCase().split(' ').filter(Boolean);
@@ -115,7 +115,10 @@ function App() {
                 {/* Header Section */}
                 <div className="flex-none pt-10 pb-6 text-center z-10">
                     <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 animate-gradient-x tracking-tight mb-4">
-                        StrikePractice
+                        <span className="flex items-center justify-center gap-4">
+                            <img src="/sp-icon.png" alt="StrikePractice Icon" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
+                            StrikePractice
+                        </span>
                         <span className="block text-2xl md:text-3xl text-gray-500 mt-2 font-medium">Placeholders</span>
                     </h1>
                     
@@ -155,8 +158,8 @@ function App() {
                                 )}
                             </p>
                             <button
-                                onClick={() => setSearch(" ")}
-                                disabled={search === " "}
+                                onClick={() => setSearch("")}
+                                disabled={search === ""}
                                 className="px-4 py-2 bg-gray-800 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium rounded-lg transition-colors border border-gray-700 text-blue-400"
                             >
                                 Show All
