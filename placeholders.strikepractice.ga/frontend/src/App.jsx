@@ -115,8 +115,7 @@ function App() {
                 {/* Header Section */}
                 <div className="flex-none pt-10 pb-6 text-center z-10">
                     <h1 className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 animate-gradient-x tracking-tight mb-4">
-                        <span className="flex items-center justify-center gap-4">
-                            <img src="/sp-icon.png" alt="StrikePractice Icon" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
+                        <span className="flex items-center justify-center">
                             StrikePractice
                         </span>
                         <span className="block text-2xl md:text-3xl text-gray-500 mt-2 font-medium">Placeholders</span>
