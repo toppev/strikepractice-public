@@ -11,6 +11,8 @@ services:
     image: strike-placeholders-backend
     volumes:
       - ./backend:/usr/src/app
+    environment:
+      - REDIS=redis
   frontend:
     container_name: strike-placeholders-frontend
     build:
@@ -23,7 +25,7 @@ services:
       - ./frontend:/usr/src/app
   redis:
     container_name: strike-placeholders-redis-dev
-    image: redis:alpine
+    image: redis:8-alpine
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
