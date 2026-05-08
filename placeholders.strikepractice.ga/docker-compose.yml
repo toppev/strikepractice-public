@@ -13,6 +13,7 @@ services:
       - REDIS=redis
   frontend:
     container_name: strike-placeholders-frontend
+    restart: always
     build:
       context: ./frontend
       dockerfile: Dockerfile
