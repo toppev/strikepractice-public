@@ -1,2 +1,2 @@
-docker compose pull
-docker compose up --build
+docker compose build --pull
+docker compose up -d
