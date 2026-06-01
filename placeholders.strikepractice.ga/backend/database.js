@@ -9,10 +9,7 @@ async function getData(token, key) {
 }
 
 async function setData(token, key, data) {
-    // Update all addresses list
-    // TODO: prevent overriding
-    redis.set(token + ":" + key, JSON.stringify(data), 'ex', expirySeconds)
-        .catch(err => console.log(err))
+    return redis.set(token + ":" + key, JSON.stringify(data), 'EX', expirySeconds)
 }
 
 module.exports = {
